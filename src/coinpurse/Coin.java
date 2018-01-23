@@ -17,13 +17,30 @@ public class Coin implements Comparable<Coin> {
         }
     }
 
+    /**
+     * This method is created to get the value of coin.
+     * @return value of coin.
+     */
+
     public double getValue(){
         return this.value;
     }
 
+    /**
+     * This string method is use to get the currency.
+     * @return currency of type coin.
+     */
+
     public String getCurrency(){
         return this.currency;
     }
+
+    /**
+     * Comparing two objects if they are the same returning
+     * a boolean type data.
+     * @param arg
+     * @return true of false
+     */
 
     public boolean equals(Object arg){
 
@@ -33,8 +50,14 @@ public class Coin implements Comparable<Coin> {
 
         Coin other = (Coin)arg;
 
-        return this.value == other.value && this.currency == other.currency;
+        return this.value == other.value && this.currency.equals(other.currency);
     }
+
+    /**
+     * This method is used to order the coins from smallest to largest.
+     * @param coin
+     * @return x > 0 , x < 0 , x == 0
+     */
 
     public int compareTo(Coin coin){
         //this.getValue() = a
@@ -53,6 +76,12 @@ public class Coin implements Comparable<Coin> {
             return 0;
         }
     }
+
+    /**
+     * This method is used to return a string in a specific formating
+     * of value and currency.
+     * @return String in a specific format
+     */
 
     public String toString(){
         return String.format("%.2f-%s",value,currency);

@@ -11,7 +11,7 @@ import java.util.Collections;
  *  You can insert coins, withdraw money, check the balance,
  *  and check if the purse is full.
  *  
- *  @author your name
+ *  @author Thanapoom Rattanathumawat
  */
 public class Purse {
     /** Collection of objects in the purse. */
