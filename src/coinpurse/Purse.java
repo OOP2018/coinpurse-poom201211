@@ -139,18 +139,16 @@ public class Purse {
         double amountNeededToWithdraw = amount;
 
 		for (int i = money.size()-1 ; i >= 0 ; i--){
-		    if(amountNeededToWithdraw != 0){
-                // failed. Don't change the contents of the purse.
-                if((amountNeededToWithdraw - money.get(i).getValue()) >= 0){
-                    templist.add(money.get(i));
-                    amountNeededToWithdraw -= money.get(i).getValue();
-                    money.remove(i);
-                }
-                if(amountNeededToWithdraw == 0){
-                    break;
-                }
-            }
+            // failed. Don't change the contents of the purse.
+            if((amountNeededToWithdraw - money.get(i).getValue()) >= 0){
+                templist.add(money.get(i));
+                amountNeededToWithdraw -= money.get(i).getValue();
+                money.remove(i); }
+            if(amountNeededToWithdraw == 0){ break; }
         }
+        //This case is used to detect any abnormal withdraws.
+        if(amountNeededToWithdraw != 0)return null;
+
         Coin[] arrayCoin = new Coin[templist.size()];
         return templist.toArray(arrayCoin);
 
