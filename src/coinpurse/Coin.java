@@ -7,9 +7,16 @@ package coinpurse;
 
 public class Coin implements Comparable<Coin> {
 
+    /** value of the coin*/
     private double value;
+    /** currency of the coin*/
     private String currency;
 
+    /**
+     * Initializing parameters.
+     * @param value
+     * @param currency
+     */
     public Coin(double value, String currency){
         if(value > 0){
            this.value = value;
@@ -68,10 +75,6 @@ public class Coin implements Comparable<Coin> {
         else if(this.getValue() < coin.getValue()){
             return -1;
         }
-        /**
-         * This else statement is use to check when a == b.
-         * @return 0
-         */
         else{
             return 0;
         }

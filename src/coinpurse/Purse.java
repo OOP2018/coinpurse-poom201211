@@ -38,11 +38,7 @@ public class Purse {
      * @return the number of coins in the purse
      */
     public int count() {
-        int count = 0;
-        for(Coin c : money){
-            count++;
-        }
-        return count;
+        return money.size();
     }
     
     /** 
@@ -146,14 +142,20 @@ public class Purse {
             if((amountNeededToWithdraw - money.get(i).getValue()) >= 0){
                 templist.add(money.get(i));
                 amountNeededToWithdraw -= money.get(i).getValue();
-                money.remove(i); }
+                money.remove(i);
+            }
             if(amountNeededToWithdraw == 0){ break; }
         }
-        //This case is used to detect any abnormal withdraws.
-        if(amountNeededToWithdraw != 0)return null;
 
-        Coin[] arrayCoin = new Coin[templist.size()];
-        return templist.toArray(arrayCoin);
+        //This case is used to detect any abnormal withdraws.
+        if(amountNeededToWithdraw > 0){
+		    money.addAll(templist);
+		    return null;
+        }
+        else{
+            Coin[] arrayCoin = new Coin[templist.size()];
+            return templist.toArray(arrayCoin);
+        }
 
 		// Success.
 		// Remove the coins you want to withdraw from purse,
