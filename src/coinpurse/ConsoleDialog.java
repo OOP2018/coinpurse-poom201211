@@ -82,9 +82,9 @@ public class ConsoleDialog {
         Scanner scanline = new Scanner(inline);
         while( scanline.hasNextDouble() ) {
             double value = scanline.nextDouble();
-            Coin coin = makeMoney(value);
-            System.out.printf("Deposit %s... ", coin.toString() );
-            boolean ok = purse.insert(coin);
+            Valuable valuable = (Valuable) makeMoney(value);
+            System.out.printf("Deposit %s... ", valuable.toString() );
+            boolean ok = purse.insert(valuable);
             System.out.println( (ok? "ok" : "FAILED") );
         }
         if ( scanline.hasNext() )
@@ -108,13 +108,13 @@ public class ConsoleDialog {
         
         if ( scanline.hasNextDouble() ) {
              double amount = scanline.nextDouble( );
-             Coin [] coins = purse.withdraw(amount);
-             if ( coins == null ) 
+            Valuable [] valuable = purse.withdraw(amount);
+             if ( valuable == null )
                 System.out.printf("Sorry, couldn't withdraw %.2g %s\n", amount, CURRENCY);
              else {
                 System.out.print("You withdrew:");
-                for(int k=0; k<coins.length; k++) {
-                	System.out.print((k==0?" ":", ") + coins[k].toString() );
+                for(int k=0; k<valuable.length; k++) {
+                	System.out.print((k==0?" ":", ") + valuable[k].toString() );
                 }
                 System.out.println();
             }

@@ -5,6 +5,7 @@ package coinpurse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *  A coin purse contains coins.
@@ -16,7 +17,7 @@ import java.util.Collections;
 public class Purse {
     /** Collection of objects in the purse. */
 
-    private List<Coin> money;
+    private List<Valuable> money;
     
     /** Capacity is maximum number of items the purse can hold.
      *  Capacity is set when the purse is created and cannot be changed.
@@ -28,7 +29,7 @@ public class Purse {
      *  @param capacity is maximum number of coins you can put in purse.
      */
     public Purse( int capacity ) {
-        money = new ArrayList<Coin>();
+        money = new ArrayList<Valuable>();
         this.capacity = capacity;
     }
 
@@ -48,8 +49,8 @@ public class Purse {
     public double getBalance() {
 		double totalValue = 0.0;
 
-		for(Coin c : money){
-		    totalValue += c.getValue();
+		for(Valuable v : money){
+		    totalValue += v.getValue();
         }
 
         return totalValue;
@@ -85,13 +86,13 @@ public class Purse {
      * @param coin is a Coin object to insert into purse
      * @return true if coin inserted, false if can't insert
      */
-    public boolean insert( Coin coin ) {
+    public boolean insert( Valuable valuable ) {
         // if the purse is already full then can't insert anything.
-        if(this.isFull() || coin.getValue() <= 0){
+        if(this.isFull() || valuable.getValue() <= 0){
             return false;
         }
         else {
-            money.add(coin);
+            money.add(valuable);
             return true;
         }
     }
@@ -104,7 +105,7 @@ public class Purse {
      *  @return array of Coin objects for money withdrawn, 
 	 *    or null if cannot withdraw requested amount.
      */
-    public Coin[] withdraw( double amount ) {
+    public Valuable[] withdraw( double amount ) {
 
         if(amount < 0){
             System.out.println("You can not withdraw values lower than 0.");
@@ -131,9 +132,11 @@ public class Purse {
 		// This code assumes you decrease amount each time you remove a coin.
     	// Your code might use some other variable for the remaining amount to withdraw.
 
-        List<Coin> templist = new ArrayList<Coin>();
+        List<Valuable> templist = new ArrayList<Valuable>();
 
-        Collections.sort(money);
+        //Creates a new value comparator
+        Comparator<Valuable> comp = new ValueComparator();
+        Collections.sort( money, comp );
 
         double amountNeededToWithdraw = amount;
 
@@ -153,8 +156,8 @@ public class Purse {
 		    return null;
         }
         else{
-            Coin[] arrayCoin = new Coin[templist.size()];
-            return templist.toArray(arrayCoin);
+            Valuable[] arrayVal = new Valuable[templist.size()];
+            return templist.toArray(arrayVal);
         }
 
 		// Success.

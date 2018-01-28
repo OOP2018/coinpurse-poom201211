@@ -8,6 +8,7 @@ package coinpurse;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MoneyUtil {
@@ -19,18 +20,18 @@ public class MoneyUtil {
 
     public static void main(String[] args){
 
-        List<Coin> coins = new ArrayList<Coin>();
+        List<Valuable> valuables = new ArrayList<Valuable>();
 
-        coins.add(new Coin(9.2, "Baht"));
-        coins.add(new Coin(10, "Baht"));
-        coins.add(new Coin(5.4, "Baht"));
-        coins.add(new Coin(50, "Baht"));
+        valuables.add(new Coin(9.2, "Baht"));
+        valuables.add(new Coin(10, "Baht"));
+        valuables.add(new Coin(5.4, "Baht"));
+        valuables.add(new Coin(50, "Baht"));
 
-        printCoins(coins);
+        printValuable(valuables);
         //The code below checks the compareTo() method in the Coin class.
-        sortCoins(coins);
+        sortValuable(valuables);
         System.out.println("Sorted:");
-        printCoins(coins);
+        printValuable(valuables);
 
     }
 
@@ -39,9 +40,9 @@ public class MoneyUtil {
      * @param List of coins
      */
 
-    public static void printCoins(List<Coin> coins){
-        for (Coin c : coins) {
-            System.out.println(c);
+    public static void printValuable(List<Valuable> valuable){
+        for (Valuable v : valuable) {
+            System.out.println(v);
         }
     }
 
@@ -50,8 +51,9 @@ public class MoneyUtil {
      * @param List of coins
      */
 
-    public static void sortCoins(List<Coin> coins){
-        java.util.Collections.sort(coins);
+    public static void sortValuable(List<Valuable> valuable){
+        Comparator<Valuable> comp = new ValueComparator();
+        java.util.Collections.sort(valuable,comp);
     }
 
     /**
@@ -62,13 +64,13 @@ public class MoneyUtil {
      * @return List of coins that contains only the coins from the parameter
      */
 
-    public static List<Coin> filterByCurrency(List<Coin> coins, String currency) {
+    public static List<Valuable> filterByCurrency(List<Valuable> valuable, String currency) {
 
-        List<Coin> listFilter = new ArrayList<Coin>();
+        List<Valuable> listFilter = new ArrayList<Valuable>();
 
-        for (Coin c : coins) {
-            if (c.getCurrency().equals(currency)){
-                listFilter.add(c);
+        for (Valuable v : valuable) {
+            if (v.getCurrency().equals(currency)){
+                listFilter.add(v);
             }
         }
 
