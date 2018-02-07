@@ -23,6 +23,12 @@ public class Purse {
      *  Capacity is set when the purse is created and cannot be changed.
      */
     private final int capacity;
+
+    /**
+     * Defining ValueComparator as a attribute of purse it doesnt make a new
+     * comparator object everytime.
+     */
+    private Comparator<Valuable> comp = new ValueComparator();
     
     /** 
      *  Create a purse with a specified capacity.
@@ -103,7 +109,7 @@ public class Purse {
      *  or return null if cannot withdraw the amount requested.
      *  @param amount is the amount to withdraw
      *  @return array of Coin objects for money withdrawn, 
-	 *    or null if cannot withdraw requested amount.
+	 *  or null if cannot withdraw requested amount.
      */
     public Valuable[] withdraw( double amount ) {
 
@@ -111,31 +117,9 @@ public class Purse {
             System.out.println("You can not withdraw values lower than 0.");
             return null;
         }
-
-	   /*
-		* See lab sheet for outline of a solution, 
-		* or devise your own solution.
-		* The idea is to be greedy.
-		* Try to withdraw the largest coins possible.
-		* Each time you choose a coin as a candidate for
-		* withdraw, add it to a temporary list and
-		* decrease the amount (remainder) to withdraw.
-		* 
-		* If you reach a point where amountNeededToWithdraw == 0
-		* then you found a solution!
-		* Now, use the temporary list to remove coins
-		* from the money list, and return the temporary
-		* list (as an array).
-		*/
-
-		// Did we get the full amount?
-		// This code assumes you decrease amount each time you remove a coin.
-    	// Your code might use some other variable for the remaining amount to withdraw.
-
+        
         List<Valuable> templist = new ArrayList<Valuable>();
 
-        //Creates a new value comparator
-        Comparator<Valuable> comp = new ValueComparator();
         Collections.sort( money, comp );
 
         double amountNeededToWithdraw = amount;

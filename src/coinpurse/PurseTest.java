@@ -35,7 +35,10 @@ public class PurseTest {
     }
 
     /** Make a coin with the default currency. To save typing "new Coin(...)" */
-    private Valuable makeCoin(double value) {
+    private Valuable makeCoin(double value) { return new Coin(value,CURRENCY);}
+
+	/** Make a banknote with the deault currency.*/
+	private Valuable makeBankNote(double value) {
 		return new BankNote(value,CURRENCY);
 	}
 
@@ -66,6 +69,37 @@ public class PurseTest {
         // purse is full so insert should fail
         assertFalse( purse.insert(makeCoin(1)) );
     }
+
+    //** Test most methods in this test class. */
+	@Test
+	public void testValuable() {
+		Purse purse = new Purse(5);
+		Coin coin1 = (Coin) makeCoin(5);
+		Coin coin2 = (Coin) makeCoin(10);
+		BankNote note1 = (BankNote) makeBankNote(20);
+		BankNote note2 = (BankNote) makeBankNote(50);
+		BankNote note3 = (BankNote) makeBankNote(100);
+		//test equals
+		assertTrue(coin2.equals(coin2));
+		assertFalse(note1.equals(note2));
+		assertFalse(note2.equals(note3));
+		assertFalse(note1.equals(coin1));
+		//test insert
+		assertTrue( purse.insert(note1));
+		assertTrue( purse.insert(note2));
+		assertTrue( purse.insert(note3));
+		assertTrue( purse.insert(coin1));
+		assertTrue( purse.insert(coin2));
+		//count
+		assertEquals(5, purse.count());
+		//test get balance
+		assertEquals(185, purse.getBalance(), TOL);
+		//test withdraw
+		purse.withdraw(20);
+		assertEquals(165, purse.getBalance(),TOL);
+		purse.withdraw(20);
+		assertEquals(165, purse.getBalance(), TOL);
+	}
 
 
 	/** Insert should reject coin with no value. */
