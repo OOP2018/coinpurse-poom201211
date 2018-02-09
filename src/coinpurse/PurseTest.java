@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import sun.awt.SunHints;
 
 /**
  * Test the Purse using JUnit.
@@ -33,6 +34,12 @@ public class PurseTest {
     public void setUp() {
     	// nothing to initialize
     }
+
+    /** Make a coin with both value and currency */
+    private Valuable makeCurrencyCoin(double value,String currency) { return new Coin(value,CURRENCY);}
+
+	/** Make a coin with both value and currency */
+	private Valuable makeCurrencyBank(double value,String currency) { return new BankNote(value,CURRENCY);}
 
     /** Make a coin with the default currency. To save typing "new Coin(...)" */
     private Valuable makeCoin(double value) { return new Coin(value,CURRENCY);}
@@ -73,7 +80,7 @@ public class PurseTest {
     //** Test most methods in this test class. */
 	@Test
 	public void testValuable() {
-		Purse purse = new Purse(5);
+		Purse purse1 = new Purse(5);
 		Coin coin1 = (Coin) makeCoin(5);
 		Coin coin2 = (Coin) makeCoin(10);
 		BankNote note1 = (BankNote) makeBankNote(20);
@@ -85,20 +92,38 @@ public class PurseTest {
 		assertFalse(note2.equals(note3));
 		assertFalse(note1.equals(coin1));
 		//test insert
-		assertTrue( purse.insert(note1));
-		assertTrue( purse.insert(note2));
-		assertTrue( purse.insert(note3));
-		assertTrue( purse.insert(coin1));
-		assertTrue( purse.insert(coin2));
+		assertTrue( purse1.insert(note1));
+		assertTrue( purse1.insert(note2));
+		assertTrue( purse1.insert(note3));
+		assertTrue( purse1.insert(coin1));
+		assertTrue( purse1.insert(coin2));
 		//count
-		assertEquals(5, purse.count());
+		assertEquals(5, purse1.count());
 		//test get balance
-		assertEquals(185, purse.getBalance(), TOL);
+		assertEquals(185, purse1.getBalance(), TOL);
 		//test withdraw
-		purse.withdraw(20);
-		assertEquals(165, purse.getBalance(),TOL);
-		purse.withdraw(20);
-		assertEquals(165, purse.getBalance(), TOL);
+		purse1.withdraw(20);
+		assertEquals(165, purse1.getBalance(),TOL);
+		purse1.withdraw(20);
+		assertEquals(165, purse1.getBalance(), TOL);
+		//===========================================================================================
+		Purse purse2 = new Purse(3);
+		Money note50 = new Money(50,"Baht");
+		Money note20 = new Money(20,"Yen");
+		Money note100 = new Money(100,"Baht");
+		//test insert
+		assertTrue( purse2.insert(note50));
+		assertTrue( purse2.insert(note20));
+		assertTrue( purse2.insert(note100));
+		//test get balance
+		assertEquals(170, purse2.getBalance(), TOL);
+		//test currency withdraw
+		purse2.withdraw(note50);
+		assertEquals(120, purse2.getBalance(),TOL);
+		purse2.withdraw(note20);
+		//Cannot withdraw because currency is in Yen.
+		assertEquals(120, purse2.getBalance(), TOL);
+
 	}
 
 

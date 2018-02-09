@@ -16,7 +16,6 @@ import java.util.Comparator;
  */
 public class Purse {
     /** Collection of objects in the purse. */
-
     private List<Valuable> money;
     
     /** Capacity is maximum number of items the purse can hold.
@@ -150,6 +149,48 @@ public class Purse {
 		// Use list.toArray( array[] ) to copy a list into an array.
 		// toArray returns a reference to the array itself.
 	}
+
+	Valuable[] withdraw(Valuable amount){
+        if(!amount.getCurrency().equalsIgnoreCase("Baht")){
+            System.out.println("Sorry we do not mix different currencies.");
+            return null;
+        }
+
+        List<Valuable> templist = new ArrayList<Valuable>();
+
+        Collections.sort( money, comp );
+
+        double amountNeededToWithdraw = amount.getValue();
+        String stringAmount = amount.getCurrency();
+
+        for (int i = money.size()-1 ; i >= 0 ; i--){
+            // failed. Don't change the contents of the purse.
+            if(stringAmount.equalsIgnoreCase(money.get(i).getCurrency())){
+                if((amountNeededToWithdraw - money.get(i).getValue()) >= 0){
+                    templist.add(money.get(i));
+                    amountNeededToWithdraw -= money.get(i).getValue();
+                    money.remove(i);
+                }
+                if(amountNeededToWithdraw == 0){ break; }
+            }
+        }
+
+        //This case is used to detect any abnormal withdraws.
+        if(amountNeededToWithdraw > 0){
+            money.addAll(templist);
+            return null;
+        }
+        else{
+            Valuable[] arrayVal = new Valuable[templist.size()];
+            return templist.toArray(arrayVal);
+        }
+
+        // Success.
+        // Remove the coins you want to withdraw from purse,
+        // and return them as an array.
+        // Use list.toArray( array[] ) to copy a list into an array.
+        // toArray returns a reference to the array itself.
+    }
   
     /** 
      * toString returns a string description of the purse contents.
