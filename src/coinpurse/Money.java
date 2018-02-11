@@ -36,15 +36,7 @@ public class Money implements Valuable{
     public int compareTo(Valuable v) {
         //this.getValue() = a
         //v.getValue() = b
-        if(this.getValue() > v.getValue()){
-            return 1;
-        }
-        else if(this.getValue() < v.getValue()){
-            return -1;
-        }
-        else{
-            return 0;
-        }
+        return Double.compare(this.getValue(),v.getValue());
     }
 
     /**

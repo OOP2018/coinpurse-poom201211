@@ -6,7 +6,7 @@ package coinpurse;
 public class BankNote extends Money{
 
     //this attribute is used to assign the next serial number of a bank note.
-    private long nextSerialNumber = 1000000;
+    private static long nextSerialNumber = 1000000;
     //Unique serial number.
     private long serialNumber;
 

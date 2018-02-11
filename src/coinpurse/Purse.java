@@ -78,10 +78,7 @@ public class Purse {
      *  @return true if purse is full.
      */
     public boolean isFull() {
-        if(this.count() >= this.capacity){
-            return true;
-        }
-        return false;
+        return (this.count() >= this.capacity);
     }
 
     /** 
@@ -104,10 +101,11 @@ public class Purse {
     
     /**  
      *  Withdraw the requested amount of money.
-     *  Return an array of Coins withdrawn from purse,
+     *  Return an array of items withdrawn from purse,
      *  or return null if cannot withdraw the amount requested.
+     *  Returns amount using any currency.
      *  @param amount is the amount to withdraw
-     *  @return array of Coin objects for money withdrawn, 
+     *  @return array of items objects for money withdrawn,
 	 *  or null if cannot withdraw requested amount.
      */
     public Valuable[] withdraw( double amount ) {
@@ -119,13 +117,13 @@ public class Purse {
         
         List<Valuable> templist = new ArrayList<Valuable>();
 
-        Collections.sort( money, comp );
+        Collections.sort( money, comp ); // Sort by value only
 
         double amountNeededToWithdraw = amount;
 
 		for (int i = money.size()-1 ; i >= 0 ; i--){
             // failed. Don't change the contents of the purse.
-            if((amountNeededToWithdraw - money.get(i).getValue()) >= 0){
+            if((amountNeededToWithdraw >= money.get(i).getValue())){
                 templist.add(money.get(i));
                 amountNeededToWithdraw -= money.get(i).getValue();
                 money.remove(i);
@@ -138,16 +136,17 @@ public class Purse {
 		    money.addAll(templist);
 		    return null;
         }
+        // Success.
+        // Remove the items you want to withdraw from purse,
+        // and return them as an array.
+        // Use list.toArray( array[] ) to copy a list into an array.
+        // toArray returns a reference to the array itself.
         else{
             Valuable[] arrayVal = new Valuable[templist.size()];
             return templist.toArray(arrayVal);
         }
 
-		// Success.
-		// Remove the coins you want to withdraw from purse,
-		// and return them as an array.
-		// Use list.toArray( array[] ) to copy a list into an array.
-		// toArray returns a reference to the array itself.
+
 	}
 
 	Valuable[] withdraw(Valuable amount){
@@ -164,11 +163,12 @@ public class Purse {
         String stringAmount = amount.getCurrency();
 
         for (int i = money.size()-1 ; i >= 0 ; i--){
+            Valuable m = money.get(i);
             // failed. Don't change the contents of the purse.
-            if(stringAmount.equalsIgnoreCase(money.get(i).getCurrency())){
-                if((amountNeededToWithdraw - money.get(i).getValue()) >= 0){
-                    templist.add(money.get(i));
-                    amountNeededToWithdraw -= money.get(i).getValue();
+            if(stringAmount.equalsIgnoreCase(m.getCurrency())){
+                if((amountNeededToWithdraw >= m.getValue())){
+                    templist.add(m);
+                    amountNeededToWithdraw -= m.getValue();
                     money.remove(i);
                 }
                 if(amountNeededToWithdraw == 0){ break; }
@@ -180,16 +180,17 @@ public class Purse {
             money.addAll(templist);
             return null;
         }
+        // Success.
+        // Remove the items you want to withdraw from purse,
+        // and return them as an array.
+        // Use list.toArray( array[] ) to copy a list into an array.
+        // toArray returns a reference to the array itself.
         else{
             Valuable[] arrayVal = new Valuable[templist.size()];
             return templist.toArray(arrayVal);
         }
 
-        // Success.
-        // Remove the coins you want to withdraw from purse,
-        // and return them as an array.
-        // Use list.toArray( array[] ) to copy a list into an array.
-        // toArray returns a reference to the array itself.
+
     }
   
     /** 
@@ -198,7 +199,7 @@ public class Purse {
      */
 
     public String toString() {
-    	return String.format("%d coins with value %.2f",this.count(),this.getBalance());
+    	return String.format("%d items with value %.2f",this.count(),this.getBalance());
     }
 
 }
