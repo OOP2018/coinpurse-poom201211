@@ -109,51 +109,11 @@ public class Purse {
 	 *  or null if cannot withdraw requested amount.
      */
     public Valuable[] withdraw( double amount ) {
-
-        if(amount < 0){
-            System.out.println("You can not withdraw values lower than 0.");
-            return null;
-        }
-        
-        List<Valuable> templist = new ArrayList<Valuable>();
-
-        Collections.sort( money, comp ); // Sort by value only
-
-        double amountNeededToWithdraw = amount;
-
-		for (int i = money.size()-1 ; i >= 0 ; i--){
-            // failed. Don't change the contents of the purse.
-            if((amountNeededToWithdraw >= money.get(i).getValue())){
-                templist.add(money.get(i));
-                amountNeededToWithdraw -= money.get(i).getValue();
-                money.remove(i);
-            }
-            if(amountNeededToWithdraw == 0){ break; }
-        }
-
-        //This case is used to detect any abnormal withdraws.
-        if(amountNeededToWithdraw > 0){
-		    money.addAll(templist);
-		    return null;
-        }
-        // Success.
-        // Remove the items you want to withdraw from purse,
-        // and return them as an array.
-        // Use list.toArray( array[] ) to copy a list into an array.
-        // toArray returns a reference to the array itself.
-        else{
-            Valuable[] arrayVal = new Valuable[templist.size()];
-            return templist.toArray(arrayVal);
-        }
-
-
+        return withdraw(new Money(amount, "Baht"));
 	}
 
 	Valuable[] withdraw(Valuable amount){
-        if(!amount.getCurrency().equalsIgnoreCase("Baht")){
-            System.out.println("Sorry we do not mix different currencies.");
-            return null;
-        }
+        if(amount.getValue() <= 0 || amount == null)return null;
 
         List<Valuable> templist = new ArrayList<Valuable>();
 
@@ -165,14 +125,14 @@ public class Purse {
         for (int i = money.size()-1 ; i >= 0 ; i--){
             Valuable m = money.get(i);
             // failed. Don't change the contents of the purse.
-            if(stringAmount.equalsIgnoreCase(m.getCurrency())){
+            if(m.getCurrency().equalsIgnoreCase(stringAmount)){
                 if((amountNeededToWithdraw >= m.getValue())){
                     templist.add(m);
                     amountNeededToWithdraw -= m.getValue();
                     money.remove(i);
                 }
-                if(amountNeededToWithdraw == 0){ break; }
             }
+                if(amountNeededToWithdraw == 0){ break; }
         }
 
         //This case is used to detect any abnormal withdraws.

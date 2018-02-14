@@ -24,7 +24,7 @@ import sun.awt.SunHints;
 public class PurseTest {
 	/** tolerance for comparing two double values */
 	private static final double TOL = 1.0E-6;
-	private static final String CURRENCY = "BTC";
+	private static final String CURRENCY = "Baht";
 
     /**
      * Sets up the test fixture.
@@ -123,7 +123,7 @@ public class PurseTest {
 		//test currency withdraw
 		purse2.withdraw(note50);
 		assertEquals(120, purse2.getBalance(),TOL);
-		purse2.withdraw(note20);
+		purse2.withdraw(new Money(20,"Baht"));
 		//Cannot withdraw because currency is in Yen.
 		assertEquals(120, purse2.getBalance(), TOL);
 		//External test.
