@@ -5,8 +5,6 @@ package coinpurse;
  */
 public class BankNote extends Money{
 
-    //this attribute is used to assign the next serial number of a bank note.
-    private static long nextSerialNumber = 1000000;
     //Unique serial number.
     private long serialNumber;
 
@@ -18,7 +16,13 @@ public class BankNote extends Money{
      */
     public BankNote(double value,String currency){
         super(value, currency);
-        this.serialNumber = nextSerialNumber++;
+    }
+    /**
+     * Method use to set the serial number.
+     * @param serialNumber set to this attribute serialNumber
+     */
+    public void setSerialNumber(long serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     /**
@@ -26,7 +30,7 @@ public class BankNote extends Money{
      * @return return the serial number
      */
     public long getSerial() {
-        return serialNumber;
+        return this.serialNumber;
     }
 
     /**

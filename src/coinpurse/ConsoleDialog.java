@@ -10,13 +10,15 @@ import java.util.Scanner;
  */
 public class ConsoleDialog {
     // default currency for this dialog
-    public static final String CURRENCY = "Baht";
+    public static String CURRENCY;
     // use a single java.util.Scanner object for reading all input
     private static Scanner console = new Scanner( System.in );
     // Long prompt shown the first time
     final String FULL_PROMPT = "\nEnter d (deposit), w (withdraw), ? (inquiry), or q (quit): ";
     // Shorter prompt shown subsequently
     final String SHORT_PROMPT = "\nEnter d, w, ?, or q: ";
+    // Initiating MoneyFactory
+    final MoneyFactory factory = MoneyFactory.getInstance();
 
     // The dialog receives a Purse object by dependency injection (as parameter to constructor)
     // so don't create a Purse here.
@@ -26,8 +28,9 @@ public class ConsoleDialog {
      * Initialize a new Purse dialog.
      * @param purse is the Purse to interact with.
      */
-    public ConsoleDialog(Purse purse ) {
+    public ConsoleDialog(Purse purse, String currency ) {
         this.purse = purse;
+        CURRENCY = currency;
     }
 
     /** Run the user interface. */
@@ -125,13 +128,8 @@ public class ConsoleDialog {
 
     /** Make a Coin (or BankNote or whatever) using requested value. */
     private Valuable makeMoney(double value) {
-        MoneyFactory factory = MoneyFactory.getInstance();
-        Valuable valuable = null;
-        try{
-            valuable = factory.createMoney(value);
-        }catch(IllegalArgumentException ex){
-            System.out.println("Sorry, " +value+ " is not a valid amount.");
-        }
-        return valuable;
+        return factory.createMoney(value);
     }
+
+
 }
