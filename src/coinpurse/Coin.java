@@ -23,7 +23,7 @@ public class Coin extends Money{
      */
 
     public String toString(){
-        return String.format("%.2f-%s",this.getValue(),this.getCurrency());
+        return String.format("%.2f-%s",getValue(),getCurrency());
     }
 
 }

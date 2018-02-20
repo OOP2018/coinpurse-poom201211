@@ -38,6 +38,6 @@ public class BankNote extends Money{
      * @return a string representation of the argument in this class.
      */
     public String toString() {
-        return String.format("%.0f-%s (note) [%d]",this.getValue(),this.getCurrency(),this.serialNumber);
+        return String.format("%.0f-%s (note) [%d]",getValue(),getCurrency(),this.serialNumber);
     }
 }

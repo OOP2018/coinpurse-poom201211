@@ -18,7 +18,7 @@ public class MalaiMoneyFactory extends MoneyFactory{
                 if(value == coinArray[i])return new Coin(coinArray[i]*100,"Sen");
             }
             for(int k = 0; k < bankArray.length; k++){
-                if(value == bankArray[k])return new BankNote(bankArray[k],"Baht");
+                if(value == bankArray[k])return new BankNote(bankArray[k],"Ringgit");
             }
         }catch(IllegalArgumentException ex){
             System.out.println("Values not in given range");
