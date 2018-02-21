@@ -13,8 +13,6 @@ public class MoneyFactoryTest {
 
         //*Default get instance started with assigning factory to ThaiMoneyFactory.
         assertEquals(ThaiMoneyFactory.getInstance().getClass(),factory.getClass());
-        //*Should not be equals as the MalaoMoneyFactory is not added as an instance.
-        assertNotEquals(MalaiMoneyFactory.getInstance(),factory);
     }
 
     @Test

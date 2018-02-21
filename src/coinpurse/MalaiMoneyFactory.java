@@ -1,12 +1,9 @@
 package coinpurse;
 
 public class MalaiMoneyFactory extends MoneyFactory{
+    private static long nextSerialNumber = 100_000_000L;
 
     private static MoneyFactory instance = new MalaiMoneyFactory();
-
-    public static MoneyFactory getInstance() {
-        return instance;
-    }
 
     public Valuable createMoney(double value){
 
@@ -18,7 +15,11 @@ public class MalaiMoneyFactory extends MoneyFactory{
                 if(value == coinArray[i])return new Coin(coinArray[i]*100,"Sen");
             }
             for(int k = 0; k < bankArray.length; k++){
-                if(value == bankArray[k])return new BankNote(bankArray[k],"Ringgit");
+                if(value == bankArray[k]){
+                    BankNote banknote = new BankNote(bankArray[k],"Ringgit");
+                    banknote.setSerialNumber(nextSerialNumber++);
+                    return banknote;
+                }
             }
         }catch(IllegalArgumentException ex){
             System.out.println("Values not in given range");

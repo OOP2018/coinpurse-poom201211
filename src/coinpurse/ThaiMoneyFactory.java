@@ -1,12 +1,10 @@
 package coinpurse;
 
+import java.util.ArrayList;
+
 public class ThaiMoneyFactory extends MoneyFactory{
 
-    private static MoneyFactory instance = new ThaiMoneyFactory();
-
-    public static MoneyFactory getInstance() {
-        return instance;
-    }
+    private static long nextSerialNumber = 100_000_000L;
 
     public Valuable createMoney(double value){
 
@@ -18,11 +16,16 @@ public class ThaiMoneyFactory extends MoneyFactory{
                 if(value == coinArray[i])return new Coin(coinArray[i],"Baht");
             }
             for(int k = 0; k < bankArray.length; k++){
-                if(value == bankArray[k])return new BankNote(bankArray[k],"Baht");
+                if(value == bankArray[k]){
+                    BankNote banknote = new BankNote(bankArray[k],"Baht");
+                    banknote.setSerialNumber(nextSerialNumber++);
+                    return banknote;
+                }
             }
         }catch(IllegalArgumentException ex){
             System.out.println("Values not in given range");
         }
+
         return null;
     }
 }

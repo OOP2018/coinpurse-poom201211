@@ -6,7 +6,7 @@ public abstract class MoneyFactory {
 
     public static MoneyFactory getInstance(){
         if(instance == null){
-            instance = ThaiMoneyFactory.getInstance();
+            instance = new ThaiMoneyFactory();
         }
         return instance;
     }
