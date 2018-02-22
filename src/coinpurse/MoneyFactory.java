@@ -17,8 +17,8 @@ public abstract class MoneyFactory {
         double variable = 0;
         try{
             variable = Double.parseDouble(value);
-        }catch(IllegalArgumentException ex){
-            System.out.println(ex.getMessage());
+        }catch(NumberFormatException nfe){
+            throw new IllegalArgumentException(String.format("%s is not a valid number.",value));
         }
         return createMoney(variable);
     }

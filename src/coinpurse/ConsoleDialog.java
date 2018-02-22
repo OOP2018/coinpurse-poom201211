@@ -86,6 +86,9 @@ public class ConsoleDialog {
         while( scanline.hasNextDouble() ) {
             double value = scanline.nextDouble();
             Valuable valuable = makeMoney(value);
+            if(valuable == null){
+                continue;
+            }
             System.out.printf("Deposit %s... ", valuable.toString() );
             boolean ok = purse.insert(valuable);
             System.out.println( (ok? "ok" : "FAILED") );
@@ -128,7 +131,13 @@ public class ConsoleDialog {
 
     /** Make a Coin (or BankNote or whatever) using requested value. */
     private Valuable makeMoney(double value) {
-        return factory.createMoney(value);
+        Valuable valuable = null;
+        try {
+            valuable = factory.createMoney( value );
+        } catch (IllegalArgumentException ex) {
+            System.out.println("Sorry, "+value+" is not a valid amount.");
+        }
+        return valuable;
     }
 
 
