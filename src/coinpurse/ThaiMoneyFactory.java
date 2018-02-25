@@ -3,9 +3,10 @@ package coinpurse;
 import java.util.ArrayList;
 
 public class ThaiMoneyFactory extends MoneyFactory{
-
+    // Initialize attribute nextSerialNumber for adding next number to serial bank note
     private static long nextSerialNumber = 100_000_000L;
 
+    // A method for creating each BankNote and Coin.
     public Valuable createMoney(double value){
 
         double[] coinArray = {1,2,5,10};

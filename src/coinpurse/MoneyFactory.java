@@ -1,9 +1,18 @@
 package coinpurse;
 
+/**
+ * Super class MoneyFactory for creating different banknotes and coins
+ */
 public abstract class MoneyFactory {
 
+    // A null attribute for assigning each sub-class instance to
     private static MoneyFactory instance;
 
+
+    /**
+     * Method for getting instance of other sub-classes and setting a default instance if null
+     * @return instance
+     */
     public static MoneyFactory getInstance(){
         if(instance == null){
             instance = new ThaiMoneyFactory();
@@ -11,6 +20,11 @@ public abstract class MoneyFactory {
         return instance;
     }
 
+    /**
+     * Abstract method for other sub-classes to initialize
+     * @param value
+     * @return createMoney(variable)
+     */
     public abstract Valuable createMoney(double value);
 
     public Valuable createMoney(String value){
@@ -23,6 +37,10 @@ public abstract class MoneyFactory {
         return createMoney(variable);
     }
 
+    /**
+     * // Method for setting the state of the MoneyFactory class
+     * @param f
+     */
     public static void setFactory(MoneyFactory f){
         instance = f;
     }
