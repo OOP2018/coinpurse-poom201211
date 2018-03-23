@@ -18,7 +18,7 @@ import sun.awt.SunHints;
  * To run these tests, right click on this file (in Project panel)
  * and choose Run As -> JUnit test
  *
- * @author  Resident Evil
+ * @author  Thanapoom Rattanathumawat
  * @version 2018.01.19
  */
 public class PurseTest {

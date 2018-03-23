@@ -2,6 +2,9 @@ package coinpurse;
 
 // You will use Collections.sort() to sort the coins
 
+import coinpurse.strategy.GreedyWithdraw;
+import coinpurse.strategy.WithdrawStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
@@ -28,12 +31,18 @@ public class Purse {
      * comparator object everytime.
      */
     private Comparator<Valuable> comp = new ValueComparator();
-    
+
+    /**
+     * Initiating WithdrawStrategy object
+     */
+    private WithdrawStrategy strategy;
+
     /** 
      *  Create a purse with a specified capacity.
      *  @param capacity is maximum number of coins you can put in purse.
      */
     public Purse( int capacity ) {
+        strategy = new GreedyWithdraw();
         money = new ArrayList<Valuable>();
         this.capacity = capacity;
     }
@@ -85,7 +94,7 @@ public class Purse {
      * Insert a coin into the purse.
      * The coin is only inserted if the purse has space for it
      * and the coin has positive value.  No worthless coins!
-     * @param coin is a Coin object to insert into purse
+     * @param valuable is a money object to insert into purse
      * @return true if coin inserted, false if can't insert
      */
     public boolean insert( Valuable valuable ) {
@@ -113,44 +122,10 @@ public class Purse {
 	}
 
 	Valuable[] withdraw(Valuable amount){
-        if(amount.getValue() <= 0 || amount == null)return null;
+        List<Valuable> templists = strategy.withdraw(amount,money);
 
-        List<Valuable> templist = new ArrayList<Valuable>();
-
-        Collections.sort( money, comp );
-
-        double amountNeededToWithdraw = amount.getValue();
-        String stringAmount = amount.getCurrency();
-
-        for (int i = money.size()-1 ; i >= 0 ; i--){
-            Valuable m = money.get(i);
-            // failed. Don't change the contents of the purse.
-            if(m.getCurrency().equalsIgnoreCase(stringAmount)){
-                if((amountNeededToWithdraw >= m.getValue())){
-                    templist.add(m);
-                    amountNeededToWithdraw -= m.getValue();
-                    money.remove(i);
-                }
-            }
-                if(amountNeededToWithdraw == 0){ break; }
-        }
-
-        //This case is used to detect any abnormal withdraws.
-        if(amountNeededToWithdraw > 0){
-            money.addAll(templist);
-            return null;
-        }
-        // Success.
-        // Remove the items you want to withdraw from purse,
-        // and return them as an array.
-        // Use list.toArray( array[] ) to copy a list into an array.
-        // toArray returns a reference to the array itself.
-        else{
-            Valuable[] arrayVal = new Valuable[templist.size()];
-            return templist.toArray(arrayVal);
-        }
-
-
+        Valuable[] arrayVal = new Valuable[templists.size()];
+        return templists.toArray(arrayVal);
     }
   
     /** 
