@@ -104,6 +104,4 @@ public class WithdrawTest {
         strategy.withdraw(difList.get(0),difList);
         Assert.assertEquals(strategy.withdraw(new BankNote(20.0, "Baht"),difList),strategy.withdraw(new BankNote(20.0, "Baht"),list));
     }
-
-
 }

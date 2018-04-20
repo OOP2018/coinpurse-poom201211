@@ -3,7 +3,6 @@ package coinpurse.strategy;
 import coinpurse.Valuable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import coinpurse.Money;
 
